@@ -1,8 +1,9 @@
-from flask import Flask
+from flask import Flask, send_file
 
-app = Flask(__name__)
+app = Flask(__name__,
+            static_url_path='/web/static')
 
 @app.route("/")
 def hello_world():
-    return "<h1>Hello world!</h1>"
+    return send_file('web/static/index.html')
 
