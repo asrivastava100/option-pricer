@@ -1,4 +1,5 @@
 from flask import Flask, send_file
+from pricer import BSPricer
 
 app = Flask(__name__,
             static_url_path='/web/static')
