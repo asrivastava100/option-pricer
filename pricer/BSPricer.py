@@ -40,6 +40,8 @@ class BSPricer:
         r = self.riskfree_rate
         d1 = (1/(sigma * math.sqrt(T))) * (math.log(S/K) + (r+0.5*sigma**2)*T)
         d2 = d1 - sigma * math.sqrt(T)
-        price = NormalDist.cdf(d1)*S - NormalDist.cdf(d2)*K*math.exp(-r*T)
+        price = NormalDist().cdf(d1)*S - NormalDist().cdf(d2)*K*math.exp(-r*T)
         return price
+    
+    
 
