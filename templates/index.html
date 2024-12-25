@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Option Pricer</title>
+    <script defer src="/static/script.js"></script>
+</head>
+<body>
+    <h1>Call pricer</h1>
+    <p>
+    <label for="optionType">Option Type:</label>
+    <select id="optionType">
+        <option value="call">Call</option>
+        <option value="put">Put</option>
+    </select>
+    </p>
+    <p>
+    <label for="maturity">Maturity:</label>
+    <input type="text" id="maturity" name="maturity">
+    </p>
+    <p>
+    <label for="stockPrice">Stock Price:</label>
+    <input type="text" id="stockPrice" name="stockPrice">
+    </p>
+    <p>
+    <label for="strike">Strike:</label>
+    <input type="text" id="strike" name="strike">
+    </p>
+    <p>
+    <label for="volatility">Volatility:</label>
+    <input type="text" id="volatility" name="volatility">
+    </p>
+    <p>
+    <label for="riskFreeRate">Risk-free rate:</label>
+    <input type="text" id="riskFreeRate" name="riskFreeRate">
+    </p>
+    <p>
+    <button id="calcCallPrice">Calculate</button>
+    </p>
+    <p>
+    <label for="callPriceRes">Call Price:</label>
+    <input type="text" id="callPriceRes" name="callPriceRes">
+    </p>
+</body>
+
+</html>
