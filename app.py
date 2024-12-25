@@ -8,8 +8,8 @@ app.debug = True
 def hello_world():
     return render_template('index.html')
 
-@app.route("/api/priceCall")
-def priceCall():
+@app.route("/api/priceBasicOption")
+def price_basic_option():
     option_type   = request.args.get("optionType")
     maturity      = float(request.args.get("maturity"))
     stock_price   = float(request.args.get("stockPrice"))
@@ -17,6 +17,6 @@ def priceCall():
     volatility    = float(request.args.get("volatility"))
     riskfree_rate = float(request.args.get("riskFreeRate"))
     bs = BSPricer(option_type, maturity, stock_price, strike, volatility, riskfree_rate)
-    return str(bs.price_call())
+    return str(bs.price_basic_option())
 
 

@@ -20,7 +20,7 @@ class BSPricer:
         self.volatility = volatility
         self.riskfree_rate = riskfree_rate
 
-    def price_call(self) -> float:
+    def price_basic_option(self) -> float:
         """
         Returns the call / put price. 
         S = Stock price
@@ -29,6 +29,7 @@ class BSPricer:
         Sigma = volatility
         r = risk free rate
         Call price = N(d1)*S - N(d2)*K*exp(-r*T)
+        Put price = -N(-d1)*S + N(-d2)*K*exp(-r*T)
         where d1 = (1/(sigma * sqrt(T))) * (log(S/K) + (r+0.5*sigma^2)*T)
         d2 = d1 - sigma * sqrt(T)
         N(d) is the standard normal cdf
@@ -40,8 +41,13 @@ class BSPricer:
         r = self.riskfree_rate
         d1 = (1/(sigma * math.sqrt(T))) * (math.log(S/K) + (r+0.5*sigma**2)*T)
         d2 = d1 - sigma * math.sqrt(T)
-        price = NormalDist().cdf(d1)*S - NormalDist().cdf(d2)*K*math.exp(-r*T)
+        if self.option_type == "call":
+            price = NormalDist().cdf(d1)*S - NormalDist().cdf(d2)*K*math.exp(-r*T)
+        elif self.option_type == "put":
+            price = -NormalDist().cdf(-d1)*S + NormalDist().cdf(-d2)*K*math.exp(-r*T)
+        else:
+            price = None
         return price
     
-    
 
+    
