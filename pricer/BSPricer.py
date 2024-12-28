@@ -42,12 +42,37 @@ class BSPricer:
         d1 = (1/(sigma * math.sqrt(T))) * (math.log(S/K) + (r+0.5*sigma**2)*T)
         d2 = d1 - sigma * math.sqrt(T)
         if self.option_type == "call":
-            price = NormalDist().cdf(d1)*S - NormalDist().cdf(d2)*K*math.exp(-r*T)
+            return NormalDist().cdf(d1)*S - NormalDist().cdf(d2)*K*math.exp(-r*T)
         elif self.option_type == "put":
-            price = -NormalDist().cdf(-d1)*S + NormalDist().cdf(-d2)*K*math.exp(-r*T)
+            return -NormalDist().cdf(-d1)*S + NormalDist().cdf(-d2)*K*math.exp(-r*T)
         else:
-            price = None
-        return price
+            return None
+    
+    def get_delta(self):
+        """
+        Returns the option delta
+        S = Stock price
+        K = Strike
+        T = time to maturity
+        Sigma = volatility
+        r = risk free rate
+        delta call = N(d1)
+        delta put = N(d1) - 1
+        where d1 = (1/(sigma * sqrt(T))) * (log(S/K) + (r+0.5*sigma^2)*T)
+        """
+        sigma = self.volatility
+        T = self.maturity
+        K = self.strike
+        S = self.stock_price
+        r = self.riskfree_rate
+        d1 = (1/(sigma * math.sqrt(T))) * (math.log(S/K) + (r+0.5*sigma**2)*T)
+        if self.option_type == "call":
+            return NormalDist().cdf(d1)
+        elif self.option_type == "put":
+            return NormalDist().cdf(d1) -1
+        else:
+            return None
+
     
 
     
