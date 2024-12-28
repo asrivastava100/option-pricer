@@ -1,12 +1,12 @@
-from flask import Flask, request, render_template
+from flask import Flask, request
 from pricer.BSPricer import BSPricer
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="web", static_url_path="")
 
 app.debug = True
 @app.route("/")
 def hello_world():
-    return render_template('index.html')
+    return app.send_static_file('index.html')
 
 @app.route("/api/priceBasicOption")
 def price_basic_option():
