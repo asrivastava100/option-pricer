@@ -82,7 +82,7 @@ class BSPricer:
         upper = int(1.5 * self.stock_price) + 1
         stock_prices = [i for i in range(lower,upper)]
         option_prices = [self.price_basic_option(price) for price in stock_prices]
-        terminal_values = [max(price - self.strike,0) for price in stock_prices]
+        terminal_values = [max(price - self.strike,0) if self.option_type == "call" else max(self.strike - price,0) for price in stock_prices]
         return {"stock_prices":stock_prices, 
                 "option_prices":option_prices, 
                 "terminal_values":terminal_values}
