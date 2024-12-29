@@ -20,7 +20,7 @@ class BSPricer:
         self.volatility = volatility
         self.riskfree_rate = riskfree_rate
 
-    def price_basic_option(self) -> float:
+    def price_basic_option(self, stock_price = None, strike = None, maturity = None, volatility = None, risk_free_rate = None) -> float:
         """
         Returns the call / put price. 
         S = Stock price
@@ -34,11 +34,11 @@ class BSPricer:
         d2 = d1 - sigma * sqrt(T)
         N(d) is the standard normal cdf
         """
-        sigma = self.volatility
-        T = self.maturity
-        K = self.strike
-        S = self.stock_price
-        r = self.riskfree_rate
+        sigma = self.volatility if volatility is None else volatility
+        T = self.maturity if maturity is None else maturity
+        K = self.strike if strike is None else strike
+        S = self.stock_price if stock_price is None else stock_price
+        r = self.riskfree_rate if risk_free_rate is None else risk_free_rate
         d1 = (1/(sigma * math.sqrt(T))) * (math.log(S/K) + (r+0.5*sigma**2)*T)
         d2 = d1 - sigma * math.sqrt(T)
         if self.option_type == "call":
@@ -48,7 +48,7 @@ class BSPricer:
         else:
             return None
     
-    def get_delta(self):
+    def get_delta(self, stock_price=None):
         """
         Returns the option delta
         S = Stock price
@@ -63,7 +63,7 @@ class BSPricer:
         sigma = self.volatility
         T = self.maturity
         K = self.strike
-        S = self.stock_price
+        S = stock_price if stock_price is not None else self.stock_price
         r = self.riskfree_rate
         d1 = (1/(sigma * math.sqrt(T))) * (math.log(S/K) + (r+0.5*sigma**2)*T)
         if self.option_type == "call":
@@ -73,6 +73,19 @@ class BSPricer:
         else:
             return None
 
-    
+    def multi_option_price_run(self):
+        """
+        Returns options prices for different stock prices. Also returns terminal payoffs.
+        Range of stock price = (0.5 * stock_price, 1.5 * stock_price)
+        """
+        lower = int(0.5 * self.stock_price) + 1
+        upper = int(1.5 * self.stock_price) + 1
+        stock_prices = [i for i in range(lower,upper)]
+        option_prices = [self.price_basic_option(price) for price in stock_prices]
+        terminal_values = [max(price - self.strike,0) for price in stock_prices]
+        return {"stock_prices":stock_prices, 
+                "option_prices":option_prices, 
+                "terminal_values":terminal_values}
+        
 
     
