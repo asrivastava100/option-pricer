@@ -8,6 +8,7 @@ let riskFreeRate = document.getElementById("riskFreeRate")
 let priceRes = document.getElementById("priceRes")
 let btnCalcMultiplePrices = document.getElementById("calcMultiplePrices")
 let optionPriceFunctionChart
+let optionDeltaChart
 
 //fetch('api/priceCall?optionType=call&maturity=0.25&stockPrice=100&strike=95&volatility=0.5&riskFreeRate=0.01')
 btnCalcOptionPrice.addEventListener("click",()=>{
@@ -52,6 +53,30 @@ function createOptionChart(chData){
 
 }
 
+function createOptionDeltaChart(chData){
+    if(optionDeltaChart !== undefined){
+        optionDeltaChart.destroy()
+    }
+    optionDeltaChart = new Chart(document.getElementById("optionDelta"),
+    {
+        type:"line",
+        data:{
+            labels:chData.stock_prices,
+            datasets:[
+                {
+                    label:"Option Delta",
+                    data:chData.deltas
+                }
+                
+            ]
+        }
+
+    }
+
+)
+
+}
+
 btnCalcMultiplePrices.addEventListener("click",()=>{
     let requestText = 'api/priceMultipleOptions?optionType=' + optionType.value + "&maturity=" + maturity.value + "&stockPrice=" + stockPrice.value + "&strike=" + strike.value + "&volatility=" + volatility.value + "&riskFreeRate=" + riskFreeRate.value
     fetch(requestText).then(res =>{
@@ -63,6 +88,8 @@ btnCalcMultiplePrices.addEventListener("click",()=>{
         }
     }).then(data => {
         createOptionChart(data)
+        createOptionDeltaChart(data)
 })
     .catch(err=>console.log("fetch failed"))
 })
+
