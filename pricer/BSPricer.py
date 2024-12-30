@@ -8,7 +8,8 @@ class BSPricer:
                  stock_price:float, 
                  strike:float, 
                  volatility:float, 
-                 riskfree_rate:float) -> None:
+                 riskfree_rate:float,
+                 is_long:bool) -> None:
         """
         option_type: 'call' or 'put'
         maturity, stock_price, volatility: must be positive floats
@@ -19,6 +20,9 @@ class BSPricer:
         self.strike = strike
         self.volatility = volatility
         self.riskfree_rate = riskfree_rate
+        self.is_long = is_long
+        self.sign = 1 if self.is_long else -1
+        print(self.is_long)
 
     def price_basic_option(self, stock_price = None, strike = None, maturity = None, volatility = None, risk_free_rate = None) -> float:
         """
@@ -42,9 +46,9 @@ class BSPricer:
         d1 = (1/(sigma * math.sqrt(T))) * (math.log(S/K) + (r+0.5*sigma**2)*T)
         d2 = d1 - sigma * math.sqrt(T)
         if self.option_type == "call":
-            return NormalDist().cdf(d1)*S - NormalDist().cdf(d2)*K*math.exp(-r*T)
+            return self.sign * (NormalDist().cdf(d1)*S - NormalDist().cdf(d2)*K*math.exp(-r*T)) 
         elif self.option_type == "put":
-            return -NormalDist().cdf(-d1)*S + NormalDist().cdf(-d2)*K*math.exp(-r*T)
+            return self.sign * (-NormalDist().cdf(-d1)*S + NormalDist().cdf(-d2)*K*math.exp(-r*T))
         else:
             return None
     
@@ -67,9 +71,9 @@ class BSPricer:
         r = self.riskfree_rate
         d1 = (1/(sigma * math.sqrt(T))) * (math.log(S/K) + (r+0.5*sigma**2)*T)
         if self.option_type == "call":
-            return NormalDist().cdf(d1)
+            return self.sign * NormalDist().cdf(d1)
         elif self.option_type == "put":
-            return NormalDist().cdf(d1) -1
+            return self.sign * (NormalDist().cdf(d1) -1)
         else:
             return None
 
@@ -82,7 +86,7 @@ class BSPricer:
         upper = int(1.5 * self.stock_price) + 1
         stock_prices = [i for i in range(lower,upper)]
         option_prices = [self.price_basic_option(price) for price in stock_prices]
-        terminal_values = [max(price - self.strike,0) if self.option_type == "call" else max(self.strike - price,0) for price in stock_prices]
+        terminal_values = [self.sign * max(price - self.strike,0) if self.option_type == "call" else self.sign * max(self.strike - price,0) for price in stock_prices]
         deltas = [self.get_delta(price) for price in stock_prices]
         return {"stock_prices":stock_prices, 
                 "option_prices":option_prices, 

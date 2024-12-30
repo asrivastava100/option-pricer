@@ -6,13 +6,14 @@ let strike = document.getElementById("strike")
 let volatility = document.getElementById("volatility")
 let riskFreeRate = document.getElementById("riskFreeRate")
 let priceRes = document.getElementById("priceRes")
+let isLong = document.getElementById("isLong")
 let btnCalcMultiplePrices = document.getElementById("calcMultiplePrices")
 let optionPriceFunctionChart
 let optionDeltaChart
 
 //fetch('api/priceCall?optionType=call&maturity=0.25&stockPrice=100&strike=95&volatility=0.5&riskFreeRate=0.01')
 btnCalcOptionPrice.addEventListener("click",()=>{
-    let requestText = 'api/priceBasicOption?optionType=' + optionType.value + "&maturity=" + maturity.value + "&stockPrice=" + stockPrice.value + "&strike=" + strike.value + "&volatility=" + volatility.value + "&riskFreeRate=" + riskFreeRate.value
+    let requestText = 'api/priceBasicOption?optionType=' + optionType.value + "&maturity=" + maturity.value + "&stockPrice=" + stockPrice.value + "&strike=" + strike.value + "&volatility=" + volatility.value + "&riskFreeRate=" + riskFreeRate.value + "&isLong=" + isLong.value
     priceRes.value = ""
     fetch(requestText).then(res =>{
         if(res.status == 200){
@@ -78,7 +79,7 @@ function createOptionDeltaChart(chData){
 }
 
 btnCalcMultiplePrices.addEventListener("click",()=>{
-    let requestText = 'api/priceMultipleOptions?optionType=' + optionType.value + "&maturity=" + maturity.value + "&stockPrice=" + stockPrice.value + "&strike=" + strike.value + "&volatility=" + volatility.value + "&riskFreeRate=" + riskFreeRate.value
+    let requestText = 'api/priceMultipleOptions?optionType=' + optionType.value + "&maturity=" + maturity.value + "&stockPrice=" + stockPrice.value + "&strike=" + strike.value + "&volatility=" + volatility.value + "&riskFreeRate=" + riskFreeRate.value + "&isLong=" + isLong.value
     fetch(requestText).then(res =>{
         if(res.status == 200){
             return res.json()

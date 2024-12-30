@@ -16,7 +16,8 @@ def price_basic_option():
     strike        = float(request.args.get("strike"))
     volatility    = float(request.args.get("volatility"))
     riskfree_rate = float(request.args.get("riskFreeRate"))
-    bs = BSPricer(option_type, maturity, stock_price, strike, volatility, riskfree_rate)
+    is_long       = request.args.get("isLong") == "True"
+    bs = BSPricer(option_type, maturity, stock_price, strike, volatility, riskfree_rate,is_long)
     return str(bs.price_basic_option())
 
 @app.route("/api/priceMultipleOptions")
@@ -27,7 +28,8 @@ def price_multiple_option():
     strike        = float(request.args.get("strike"))
     volatility    = float(request.args.get("volatility"))
     riskfree_rate = float(request.args.get("riskFreeRate"))
-    bs = BSPricer(option_type, maturity, stock_price, strike, volatility, riskfree_rate)
+    is_long       = request.args.get("isLong") == "True"
+    bs = BSPricer(option_type, maturity, stock_price, strike, volatility, riskfree_rate,is_long)
     return jsonify(bs.multi_option_price_run())
 
 
