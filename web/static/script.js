@@ -8,6 +8,7 @@ let riskFreeRate = document.getElementById("riskFreeRate")
 let priceRes = document.getElementById("priceRes")
 let isLong = document.getElementById("isLong")
 let btnCalcMultiplePrices = document.getElementById("calcMultiplePrices")
+let optionPriceContainer = document.getElementById("optionPriceContainer")
 let optionPriceFunctionChart
 let optionDeltaChart
 
@@ -46,6 +47,15 @@ function createOptionChart(chData){
                     data:chData.terminal_values
                 }
             ]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Option Price vs Stock Price'
+                }
+            }
+
         }
 
     }
@@ -70,6 +80,15 @@ function createOptionDeltaChart(chData){
                 }
                 
             ]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Option Delta vs Stock Price'
+                }
+            }
+
         }
 
     }
@@ -90,6 +109,7 @@ btnCalcMultiplePrices.addEventListener("click",()=>{
     }).then(data => {
         createOptionChart(data)
         createOptionDeltaChart(data)
+        optionPriceContainer.classList.remove("d-none")
 })
     .catch(err=>console.log("fetch failed"))
 })

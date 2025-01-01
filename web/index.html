@@ -35,52 +35,61 @@
           </div>
         </div>
       </nav>
-    <p>
-    <label for="optionType">Option Type:</label>
-    <select id="optionType">
-        <option value="call">Call</option>
-        <option value="put">Put</option>
-    </select>
-    </p>
-    <p>
-      <label for="isLong">Long/Short:</label>
-      <select id="isLong">
-          <option value="True">Long</option>
-          <option value="False">Short</option>
-      </select>
-      </p>
-    <p>
-    <label for="maturity">Maturity:</label>
-    <input type="text" id="maturity" name="maturity">
-    </p>
-    <p>
-    <label for="stockPrice">Stock Price:</label>
-    <input type="text" id="stockPrice" name="stockPrice">
-    </p>
-    <p>
-    <label for="strike">Strike:</label>
-    <input type="text" id="strike" name="strike">
-    </p>
-    <p>
-    <label for="volatility">Volatility:</label>
-    <input type="text" id="volatility" name="volatility">
-    </p>
-    <p>
-    <label for="riskFreeRate">Risk-free rate:</label>
-    <input type="text" id="riskFreeRate" name="riskFreeRate">
-    </p>
-    <p>
-    <button id="calcOptionPrice">Calculate</button>
-    </p>
-    <p>
-    <label for="priceRes">Option Price:</label>
-    <input type="text" id="priceRes" name="priceRes">
-    </p>
-    <p>
-    <button id="calcMultiplePrices">Multi-run</button>
-    </p>
-    <div style="width: 800px;"><canvas id="optionPriceFunction"></canvas></div>
-    <div style="width: 800px;"><canvas id="optionDelta"></canvas></div>
+    
+    <div class="container">
+      <p>
+        <label for="optionType">Option Type:</label>
+        <select id="optionType">
+            <option value="call">Call</option>
+            <option value="put">Put</option>
+        </select>
+        </p>
+        <p>
+          <label for="isLong">Long/Short:</label>
+          <select id="isLong">
+              <option value="True">Long</option>
+              <option value="False">Short</option>
+          </select>
+          </p>
+        <p>
+        <label for="maturity">Maturity:</label>
+        <input type="text" id="maturity" name="maturity">
+        </p>
+        <p>
+        <label for="stockPrice">Stock Price:</label>
+        <input type="text" id="stockPrice" name="stockPrice">
+        </p>
+        <p>
+        <label for="strike">Strike:</label>
+        <input type="text" id="strike" name="strike">
+        </p>
+        <p>
+        <label for="volatility">Volatility:</label>
+        <input type="text" id="volatility" name="volatility">
+        </p>
+        <p>
+        <label for="riskFreeRate">Risk-free rate:</label>
+        <input type="text" id="riskFreeRate" name="riskFreeRate">
+        </p>
+        <p>
+        <button id="calcOptionPrice">Calculate</button>
+        </p>
+        <p>
+        <label for="priceRes">Option Price:</label>
+        <input type="text" id="priceRes" name="priceRes">
+        </p>
+        <p>
+        <button id="calcMultiplePrices">Multi-run</button>
+        </p>
+        <div class="container" style="position: relative;">
+          <canvas id="optionPriceFunction"></canvas>
+        </div>
+        <div class="container" style="position: relative;">
+          <canvas id="optionDelta"></canvas>
+        </div>
+
+    </div>
+    
 </body>
 
 </html>
