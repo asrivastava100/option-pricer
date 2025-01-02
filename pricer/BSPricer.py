@@ -22,7 +22,6 @@ class BSPricer:
         self.riskfree_rate = riskfree_rate
         self.is_long = is_long
         self.sign = 1 if self.is_long else -1
-        print(self.is_long)
 
     def price_basic_option(self, stock_price = None, strike = None, maturity = None, volatility = None, risk_free_rate = None) -> float:
         """
