@@ -33,16 +33,17 @@ def price_multiple_option():
     bs = BSPricer(option_type, maturity, stock_price, strike, volatility, riskfree_rate,is_long)
     return jsonify(bs.multi_option_price_run())
 
-@app.route("/api/pricePortfolio")
+@app.post("/api/pricePortfolio")
 def price_portfolio():
-    maturity      = float(request.form["maturity"])
-    stock_price   = float(request.form["stockPrice"])
-    volatility    = float(request.form["volatility"])
-    riskfree_rate = float(request.form["riskFreeRate"])
-    options       = request.form["options"]
+    req_data = request.get_json()
+    maturity      = float(req_data["maturity"])
+    stock_price   = float(req_data["stockPrice"])
+    volatility    = float(req_data["volatility"])
+    riskfree_rate = float(req_data["riskFreeRate"])
+    options       = req_data["options"]
     option_portfolio = Portfolio(maturity, stock_price, volatility, riskfree_rate)
     for option in options:
-        option_portfolio.add_new_option(option["type"],float(option['strike']),option['is_long']== "True")
+        option_portfolio.add_new_option(option["type"],float(option['strike']),option['isLong']== "True")
     return jsonify(option_portfolio.multi_option_price_run())
 
 

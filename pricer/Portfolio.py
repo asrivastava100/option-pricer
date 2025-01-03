@@ -1,4 +1,4 @@
-from BSPricer import BSPricer
+from pricer.BSPricer import BSPricer
 
 class Portfolio:
     def __init__(self,
