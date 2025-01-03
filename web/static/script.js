@@ -11,6 +11,9 @@ let btnCalcMultiplePrices = document.getElementById("calcMultiplePrices")
 let optionPriceContainer = document.getElementById("optionPriceContainer")
 let optionPriceFunctionChart
 let optionDeltaChart
+let btnProcessMultipleOptions = document.getElementById("processMultipleOptions")
+let optionPriceMultipleChart
+
 
 //fetch('api/priceCall?optionType=call&maturity=0.25&stockPrice=100&strike=95&volatility=0.5&riskFreeRate=0.01')
 btnCalcOptionPrice.addEventListener("click",()=>{
@@ -112,5 +115,42 @@ btnCalcMultiplePrices.addEventListener("click",()=>{
         optionPriceContainer.classList.remove("d-none")
 })
     .catch(err=>console.log("fetch failed"))
+})
+
+btnProcessMultipleOptions.addEventListener("click", async () => {
+    let optionTypeData = Array.from(document.getElementsByClassName("optionType")).map(x => x.value)
+    let isLongData = Array.from(document.getElementsByClassName("isLong")).map(x => x.value)
+    let strikeData = Array.from(document.getElementsByClassName("strike")).map(x => x.innerText)
+    let maturity = document.getElementById("maturity").value
+    let volatility = document.getElementById("volatility").value
+    let stockPrice = document.getElementById("stockPrice").value
+    let riskFreeRate = document.getElementById("riskFreeRate").value 
+    let optionData = optionTypeData.map((x, idx) => {
+        return {
+            type: x,
+            isLong: isLongData[idx],
+            strike: strikeData[idx]
+        }
+    })
+    console.log(optionType, isLong, strike)
+
+    let response = await fetch('/api/pricePortfolio', {
+        method: 'POST', 
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            maturity,
+            volatility,
+            stockPrice,
+            riskFreeRate,
+            options: optionData
+        }),
+    })
+
+    let responseJson = await response.json()
+    createOptionChart(responseJson)
+
+
 })
 

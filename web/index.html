@@ -38,20 +38,6 @@
     
     <div class="container">
       <p>
-        <label for="optionType">Option Type:</label>
-        <select id="optionType">
-            <option value="call">Call</option>
-            <option value="put">Put</option>
-        </select>
-        </p>
-        <p>
-          <label for="isLong">Long/Short:</label>
-          <select id="isLong">
-              <option value="True">Long</option>
-              <option value="False">Short</option>
-          </select>
-          </p>
-        <p>
         <label for="maturity">Maturity:</label>
         <input type="text" id="maturity" name="maturity">
         </p>
@@ -59,10 +45,7 @@
         <label for="stockPrice">Stock Price:</label>
         <input type="text" id="stockPrice" name="stockPrice">
         </p>
-        <p>
-        <label for="strike">Strike:</label>
-        <input type="text" id="strike" name="strike">
-        </p>
+        
         <p>
         <label for="volatility">Volatility:</label>
         <input type="text" id="volatility" name="volatility">
@@ -71,6 +54,38 @@
         <label for="riskFreeRate">Risk-free rate:</label>
         <input type="text" id="riskFreeRate" name="riskFreeRate">
         </p>
+      
+        <div class="container mb-2">
+          <button type="button" class="btn btn-primary">Add Option</button>
+          <button type="button" class="btn btn-danger">Delete</button>
+        </div>
+      <table class="table table-bordered">
+        <tr>
+          <th>Option Type</th>
+          <th>Long/Short</th>
+          <th>Strike</th>
+          <th>Price</th>
+        </tr>
+        <tr>
+          <td>
+            <select class="optionType form-select">
+              <option value="call">Call</option>
+              <option value="put">Put</option>
+          </select>
+          </td>
+          <td>
+            <select class="isLong form-select">
+              <option value="True">Long</option>
+              <option value="False">Short</option>
+          </select>
+          </td>
+          <td contenteditable="true" class="strike"></td>
+          <td class="price"></td>
+        </tr>
+  
+
+      </table>
+        
         <p>
         <button id="calcOptionPrice">Calculate</button>
         </p>
@@ -86,6 +101,12 @@
         </div>
         <div class="container" style="position: relative;">
           <canvas id="optionDelta"></canvas>
+        </div>
+        <p>
+        <button id="processMultipleOptions">Process multiple options</button>
+        </p>
+        <div class="container" style="position: relative;">
+          <canvas id="optionPriceMultipleChart"></canvas>
         </div>
 
     </div>
