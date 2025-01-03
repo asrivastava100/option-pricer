@@ -13,6 +13,9 @@ let optionPriceFunctionChart
 let optionDeltaChart
 let btnProcessMultipleOptions = document.getElementById("processMultipleOptions")
 let optionPriceMultipleChart
+let btnDelete = document.getElementById("btnDeleteOption")
+let btnAdd = document.getElementById("btnAddOption")
+let optionTable = document.getElementById("optionTable")
 
 
 //fetch('api/priceCall?optionType=call&maturity=0.25&stockPrice=100&strike=95&volatility=0.5&riskFreeRate=0.01')
@@ -154,3 +157,55 @@ btnProcessMultipleOptions.addEventListener("click", async () => {
 
 })
 
+function addRow(tblId){
+    let tblRef = document.getElementById(tblId)
+    let newRow = tblRef.insertRow(-1)
+    return newRow
+}
+
+function addTd(row){
+    let newTd = row.insertCell(-1)
+    return newTd
+}
+
+function addSelect(tdElem, classesToAdd = []){
+    let newSelect = document.createElement("select")
+    tdElem.appendChild(newSelect)
+    if(classesToAdd.length !== 0) {
+        for(elem of classesToAdd){
+            newSelect.classList.add(elem)
+        }         
+    } 
+    return newSelect
+}
+
+function addOptForSelect(selectElem, val, txt){
+    let opt1 = document.createElement("option")
+    opt1.value = val
+    opt1.text = txt
+    selectElem.add(opt1)
+    return opt1
+}
+
+btnAdd.addEventListener("click",()=>{
+    let newRow = addRow("optionTable")
+    let optTypeTd = addTd(newRow)
+    let isLongTd = addTd(newRow)
+    let strike = addTd(newRow)
+    let price = addTd(newRow)
+
+    let optTypeSelect = addSelect(optTypeTd,["optionType","form-select"])
+    let optTypeOption1 = addOptForSelect(optTypeSelect,"call","Call")
+    let optTypeOption2 = addOptForSelect(optTypeSelect,"put","Put")
+    
+    let isLongSelect = addSelect(isLongTd,["isLong","form-select"])
+    let isLongOption1 = addOptForSelect(isLongSelect,"True","Long")
+    let isLongOption2 = addOptForSelect(isLongSelect,"False","Short")
+    
+    strike.setAttribute("contenteditable","true")
+    strike.classList.add("strike")
+    price.classList.add("price")
+    
+
+
+})
