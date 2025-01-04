@@ -45,7 +45,7 @@ class Portfolio:
                     "deltas":deltas}
         else:
             for idx in range(1,len(self.options)):
-                option_prices = [sum(i) for i in zip(option_prices, option_data[idx]["stock_prices"])]
+                option_prices = [sum(i) for i in zip(option_prices, option_data[idx]["option_prices"])]
                 terminal_values = [sum(i) for i in zip(terminal_values, option_data[idx]["terminal_values"])]
                 deltas = [sum(i) for i in zip(deltas, option_data[idx]["deltas"])]
             

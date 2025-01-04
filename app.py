@@ -42,8 +42,10 @@ def price_portfolio():
     riskfree_rate = float(req_data["riskFreeRate"])
     options       = req_data["options"]
     option_portfolio = Portfolio(maturity, stock_price, volatility, riskfree_rate)
+    
     for option in options:
-        option_portfolio.add_new_option(option["type"],float(option['strike']),option['isLong']== "True")
+        option_portfolio.add_new_option(option["type"],float(option['strike']),option['isLong']== "True") 
+    
     return jsonify(option_portfolio.multi_option_price_run())
 
 
