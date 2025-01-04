@@ -209,3 +209,16 @@ btnAdd.addEventListener("click",()=>{
 
 
 })
+
+function deleteRow(tblId) {
+    let tblRef = document.getElementById(tblId);
+    let rowCount = tblRef.rows.length;
+    if(rowCount !== 2){
+        tblRef.deleteRow(rowCount -1);
+    }
+    return
+}
+
+btnDelete.addEventListener('click', ()=>{
+    deleteRow("optionTable")
+})
