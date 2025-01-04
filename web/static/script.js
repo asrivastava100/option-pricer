@@ -1,37 +1,13 @@
-let btnCalcOptionPrice = document.getElementById("calcOptionPrice")
-let optionType = document.getElementById("optionType")
 let maturity = document.getElementById("maturity")
 let stockPrice = document.getElementById("stockPrice")
-let strike = document.getElementById("strike")
 let volatility = document.getElementById("volatility")
 let riskFreeRate = document.getElementById("riskFreeRate")
-let priceRes = document.getElementById("priceRes")
-let isLong = document.getElementById("isLong")
-let btnCalcMultiplePrices = document.getElementById("calcMultiplePrices")
-let optionPriceContainer = document.getElementById("optionPriceContainer")
 let optionPriceFunctionChart
 let optionDeltaChart
 let btnProcessMultipleOptions = document.getElementById("processMultipleOptions")
-let optionPriceMultipleChart
 let btnDelete = document.getElementById("btnDeleteOption")
 let btnAdd = document.getElementById("btnAddOption")
 let optionTable = document.getElementById("optionTable")
-
-
-//fetch('api/priceCall?optionType=call&maturity=0.25&stockPrice=100&strike=95&volatility=0.5&riskFreeRate=0.01')
-btnCalcOptionPrice.addEventListener("click",()=>{
-    let requestText = 'api/priceBasicOption?optionType=' + optionType.value + "&maturity=" + maturity.value + "&stockPrice=" + stockPrice.value + "&strike=" + strike.value + "&volatility=" + volatility.value + "&riskFreeRate=" + riskFreeRate.value + "&isLong=" + isLong.value
-    priceRes.value = ""
-    fetch(requestText).then(res =>{
-        if(res.status == 200){
-            return res.json()
-        } else {
-            throw new error();
-
-        }
-    }).then(data => priceRes.value = data)
-    .catch(err=>console.log("fetch failed"))
-})
 
 
 function createOptionChart(chData){
@@ -103,23 +79,6 @@ function createOptionDeltaChart(chData){
 
 }
 
-btnCalcMultiplePrices.addEventListener("click",()=>{
-    let requestText = 'api/priceMultipleOptions?optionType=' + optionType.value + "&maturity=" + maturity.value + "&stockPrice=" + stockPrice.value + "&strike=" + strike.value + "&volatility=" + volatility.value + "&riskFreeRate=" + riskFreeRate.value + "&isLong=" + isLong.value
-    fetch(requestText).then(res =>{
-        if(res.status == 200){
-            return res.json()
-        } else {
-            throw new error();
-
-        }
-    }).then(data => {
-        createOptionChart(data)
-        createOptionDeltaChart(data)
-        optionPriceContainer.classList.remove("d-none")
-})
-    .catch(err=>console.log("fetch failed"))
-})
-
 btnProcessMultipleOptions.addEventListener("click", async () => {
     let optionTypeData = Array.from(document.getElementsByClassName("optionType")).map(x => x.value)
     let isLongData = Array.from(document.getElementsByClassName("isLong")).map(x => x.value)
@@ -135,7 +94,6 @@ btnProcessMultipleOptions.addEventListener("click", async () => {
             strike: strikeData[idx]
         }
     })
-    console.log(optionType, isLong, strike)
 
     let response = await fetch('/api/pricePortfolio', {
         method: 'POST', 
@@ -153,7 +111,7 @@ btnProcessMultipleOptions.addEventListener("click", async () => {
 
     let responseJson = await response.json()
     createOptionChart(responseJson)
-
+    createOptionDeltaChart(responseJson)
 
 })
 
