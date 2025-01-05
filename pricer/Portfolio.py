@@ -37,22 +37,26 @@ class Portfolio:
         option_prices = option_data[0]["option_prices"]
         terminal_values = option_data[0]["terminal_values"]
         deltas = option_data[0]["deltas"]
+        current_option_price = [option_data[0]["current_option_price"]]
 
         if len(self.options) == 1:
             return {"stock_prices":stock_prices, 
                     "option_prices":option_prices, 
                     "terminal_values":terminal_values,
-                    "deltas":deltas}
+                    "deltas":deltas,
+                    "current_option_price":current_option_price}
         else:
             for idx in range(1,len(self.options)):
                 option_prices = [sum(i) for i in zip(option_prices, option_data[idx]["option_prices"])]
                 terminal_values = [sum(i) for i in zip(terminal_values, option_data[idx]["terminal_values"])]
                 deltas = [sum(i) for i in zip(deltas, option_data[idx]["deltas"])]
+                current_option_price.append(option_data[idx]["current_option_price"])
             
             return {"stock_prices":stock_prices, 
                     "option_prices":option_prices, 
                     "terminal_values":terminal_values,
-                    "deltas":deltas}
+                    "deltas":deltas,
+                    "current_option_price":current_option_price}
 
 
         

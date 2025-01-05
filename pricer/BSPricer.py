@@ -87,10 +87,13 @@ class BSPricer:
         option_prices = [self.price_basic_option(price) for price in stock_prices]
         terminal_values = [self.sign * max(price - self.strike,0) if self.option_type == "call" else self.sign * max(self.strike - price,0) for price in stock_prices]
         deltas = [self.get_delta(price) for price in stock_prices]
+        current_option_price_idx = int(len(stock_prices) / 2) - 1
+        current_option_price = option_prices[current_option_price_idx]
         return {"stock_prices":stock_prices, 
                 "option_prices":option_prices, 
                 "terminal_values":terminal_values,
-                "deltas":deltas}
+                "deltas":deltas,
+                "current_option_price":current_option_price}
         
     
         

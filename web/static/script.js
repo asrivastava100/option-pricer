@@ -83,6 +83,7 @@ btnProcessMultipleOptions.addEventListener("click", async () => {
     let optionTypeData = Array.from(document.getElementsByClassName("optionType")).map(x => x.value)
     let isLongData = Array.from(document.getElementsByClassName("isLong")).map(x => x.value)
     let strikeData = Array.from(document.getElementsByClassName("strike")).map(x => x.innerText)
+    let priceOutput = Array.from(document.getElementsByClassName("price"))
     let maturity = document.getElementById("maturity").value
     let volatility = document.getElementById("volatility").value
     let stockPrice = document.getElementById("stockPrice").value
@@ -112,7 +113,9 @@ btnProcessMultipleOptions.addEventListener("click", async () => {
     let responseJson = await response.json()
     createOptionChart(responseJson)
     createOptionDeltaChart(responseJson)
-
+    priceOutput.forEach((elem,idx)=>{
+        elem.innerText = responseJson.current_option_price[idx]
+    })
 })
 
 function addRow(tblId){
