@@ -36,71 +36,76 @@
         </div>
       </nav>
     
-    <div class="container">
-      <p>
-        <label for="maturity">Maturity:</label>
-        <input type="text" id="maturity" name="maturity">
-        </p>
-        <p>
-        <label for="stockPrice">Stock Price:</label>
-        <input type="text" id="stockPrice" name="stockPrice">
-        </p>
-        
-        <p>
-        <label for="volatility">Volatility:</label>
-        <input type="text" id="volatility" name="volatility">
-        </p>
-        <p>
-        <label for="riskFreeRate">Risk-free rate:</label>
-        <input type="text" id="riskFreeRate" name="riskFreeRate">
-        </p>
-      
-        <div class="container mb-2">
-          <button type="button" class="btn btn-primary" id="btnAddOption">Add Option</button>
-          <button type="button" class="btn btn-danger" id="btnDeleteOption">Delete</button>
+    <div class="ps-2">
+      <div class="row">
+        <div class="col">
+          <div>
+            <label class="form-label" for="maturity">Maturity:</label>
+            <input class="form-control" type="text" id="maturity" name="maturity" value="0.25" style="width:150px">
+          </div>
+            <div>
+            <label class="form-label" for="stockPrice">Stock Price:</label>
+            <input class="form-control" type="text" id="stockPrice" name="stockPrice" value="100" style="width:150px">
+            </div>
+            <div>
+            <label class="form-label" for="volatility">Volatility:</label>
+            <input class="form-control" type="text" id="volatility" name="volatility" value="0.5" style="width:150px">
+            </div>
+            <div>
+            <label class="form-label" for="riskFreeRate">Risk-free rate:</label>
+            <input class="form-control" type="text" id="riskFreeRate" name="riskFreeRate" value="0.01" style="width:150px">
+            </div>
+            <div class="container mt-2 mb-2">
+              <button type="button" class="btn btn-primary" id="btnAddOption">Add Option</button>
+              <button type="button" class="btn btn-danger" id="btnDeleteOption">Delete</button>
+            </div>
+          <table class="table table-bordered" id = "optionTable">
+            <tr>
+              <th>Option Type</th>
+              <th>Long/Short</th>
+              <th>Strike</th>
+              <th>Price</th>
+            </tr>
+            <tr>
+              <td>
+                <select class="optionType form-select">
+                  <option value="call">Call</option>
+                  <option value="put">Put</option>
+              </select>
+              </td>
+              <td>
+                <select class="isLong form-select">
+                  <option value="True">Long</option>
+                  <option value="False">Short</option>
+              </select>
+              </td>
+              <td contenteditable="true" class="strike">95</td>
+              <td class="price"></td>
+            </tr>
+          </table>
+          <p>
+            <button id="processMultipleOptions">Price options</button>
+          </p>
+            
         </div>
-      <table class="table table-bordered" id = "optionTable">
-        <tr>
-          <th>Option Type</th>
-          <th>Long/Short</th>
-          <th>Strike</th>
-          <th>Price</th>
-        </tr>
-        <tr>
-          <td>
-            <select class="optionType form-select">
-              <option value="call">Call</option>
-              <option value="put">Put</option>
-          </select>
-          </td>
-          <td>
-            <select class="isLong form-select">
-              <option value="True">Long</option>
-              <option value="False">Short</option>
-          </select>
-          </td>
-          <td contenteditable="true" class="strike"></td>
-          <td class="price"></td>
-        </tr>
-  
-
-      </table>
-
-      <p>
-        <button id="processMultipleOptions">Process multiple options</button>
-      </p>
-        
-       
-        <div class="container" style="position: relative;">
-          <canvas id="optionPriceFunction"></canvas>
+         <div class="col">
+           <div class="container" style="position: relative;">
+             <canvas id="optionPriceFunction"></canvas>
+           </div>
+       </div>  
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="container" style="position: relative;">
+            <canvas id="optionDelta"></canvas>
+          </div>
         </div>
-        <div class="container" style="position: relative;">
-          <canvas id="optionDelta"></canvas>
+        <div class="col">
+          <div class="container" style="position: relative;">
+            <canvas id="optionProfitMultipleChart"></canvas>
+          </div>
         </div>
-        
-        <div class="container" style="position: relative;">
-          <canvas id="optionPriceMultipleChart"></canvas>
-        </div>
+      </div>
 
     </div>
     

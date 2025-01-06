@@ -8,6 +8,7 @@ let btnProcessMultipleOptions = document.getElementById("processMultipleOptions"
 let btnDelete = document.getElementById("btnDeleteOption")
 let btnAdd = document.getElementById("btnAddOption")
 let optionTable = document.getElementById("optionTable")
+let optionProfitMultipleChart
 
 
 function createOptionChart(chData){
@@ -22,11 +23,13 @@ function createOptionChart(chData){
             datasets:[
                 {
                     label:"Option Price",
-                    data:chData.option_prices
+                    data:chData.option_prices,
+                    pointRadius:0,
                 },
                 {
                     label:"Terminal Payoff",
-                    data:chData.terminal_values
+                    data:chData.terminal_values,
+                    pointRadius:0,
                 }
             ]
         },
@@ -79,6 +82,39 @@ function createOptionDeltaChart(chData){
 
 }
 
+function createOptionProfitChart(chData){
+    if(optionProfitMultipleChart !== undefined){
+        optionProfitMultipleChart.destroy()
+    }
+    optionProfitMultipleChart = new Chart(document.getElementById("optionProfitMultipleChart"),
+    {
+        type:"line",
+        data:{
+            labels:chData.stock_prices,
+            datasets:[
+                {
+                    label:"Profit",
+                    data:chData.profit
+                }
+                
+            ]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Profit vs Stock Price'
+                }
+            }
+
+        }
+
+    }
+
+)
+
+}
+
 btnProcessMultipleOptions.addEventListener("click", async () => {
     let optionTypeData = Array.from(document.getElementsByClassName("optionType")).map(x => x.value)
     let isLongData = Array.from(document.getElementsByClassName("isLong")).map(x => x.value)
@@ -113,8 +149,9 @@ btnProcessMultipleOptions.addEventListener("click", async () => {
     let responseJson = await response.json()
     createOptionChart(responseJson)
     createOptionDeltaChart(responseJson)
+    createOptionProfitChart(responseJson)
     priceOutput.forEach((elem,idx)=>{
-        elem.innerText = responseJson.current_option_price[idx]
+        elem.innerText = responseJson.current_option_price[idx].toFixed(2)
     })
 })
 
