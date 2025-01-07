@@ -192,11 +192,14 @@ btnAdd.addEventListener("click",()=>{
     let strike = addTd(newRow)
     let price = addTd(newRow)
 
-    let optTypeSelect = addSelect(optTypeTd,["optionType","form-select"])
+    optTypeTd.classList.add('px-0', 'py-0')
+    isLongTd.classList.add('px-0', 'py-0')
+
+    let optTypeSelect = addSelect(optTypeTd,["optionType","form-select", "form-select-sm"])
     let optTypeOption1 = addOptForSelect(optTypeSelect,"call","Call")
     let optTypeOption2 = addOptForSelect(optTypeSelect,"put","Put")
     
-    let isLongSelect = addSelect(isLongTd,["isLong","form-select"])
+    let isLongSelect = addSelect(isLongTd,["isLong","form-select", "form-select-sm"])
     let isLongOption1 = addOptForSelect(isLongSelect,"True","Long")
     let isLongOption2 = addOptForSelect(isLongSelect,"False","Short")
     
