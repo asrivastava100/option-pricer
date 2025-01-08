@@ -10,6 +10,7 @@ let btnAdd = document.getElementById("btnAddOption")
 let optionTable = document.getElementById("optionTable")
 let optionProfitMultipleChart
 
+window.onload = setTimeout(() => priceAll(), 500);
 
 function createOptionChart(chData){
     if(optionPriceFunctionChart !== undefined){
@@ -117,7 +118,9 @@ function createOptionProfitChart(chData){
 
 }
 
-btnProcessMultipleOptions.addEventListener("click", async () => {
+btnProcessMultipleOptions.addEventListener("click", priceAll)
+
+async function priceAll() {
     let optionTypeData = Array.from(document.getElementsByClassName("optionType")).map(x => x.value)
     let isLongData = Array.from(document.getElementsByClassName("isLong")).map(x => x.value)
     let strikeData = Array.from(document.getElementsByClassName("strike")).map(x => x.innerText)
@@ -155,7 +158,7 @@ btnProcessMultipleOptions.addEventListener("click", async () => {
     priceOutput.forEach((elem,idx)=>{
         elem.innerText = responseJson.current_option_price[idx].toFixed(2)
     })
-})
+}
 
 function addRow(tblId){
     let tblRef = document.getElementById(tblId)
