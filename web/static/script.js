@@ -61,7 +61,8 @@ function createOptionDeltaChart(chData){
             datasets:[
                 {
                     label:"Option Delta",
-                    data:chData.deltas
+                    data:chData.deltas,
+                    pointRadius:0,
                 }
                 
             ]
@@ -94,7 +95,8 @@ function createOptionProfitChart(chData){
             datasets:[
                 {
                     label:"Profit",
-                    data:chData.profit
+                    data:chData.profit,
+                    pointRadius:0,
                 }
                 
             ]
