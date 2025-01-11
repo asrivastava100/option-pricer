@@ -1,7 +1,3 @@
-let maturity = document.getElementById("maturity")
-let stockPrice = document.getElementById("stockPrice")
-let volatility = document.getElementById("volatility")
-let riskFreeRate = document.getElementById("riskFreeRate")
 let optionPriceFunctionChart
 let optionDeltaChart
 let btnProcessMultipleOptions = document.getElementById("processMultipleOptions")
@@ -126,9 +122,9 @@ async function priceAll() {
     let strikeData = Array.from(document.getElementsByClassName("strike")).map(x => x.innerText)
     let priceOutput = Array.from(document.getElementsByClassName("price"))
     let maturity = document.getElementById("maturity").value
-    let volatility = document.getElementById("volatility").value
+    let volatility = parseFloat(document.getElementById("volatility").value) / 100
     let stockPrice = document.getElementById("stockPrice").value
-    let riskFreeRate = document.getElementById("riskFreeRate").value 
+    let riskFreeRate = parseFloat(document.getElementById("riskFreeRate").value) / 100
     let optionData = optionTypeData.map((x, idx) => {
         return {
             type: x,
