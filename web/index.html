@@ -14,6 +14,17 @@
     integrity="sha512-ZwR1/gSZM3ai6vCdI+LVF1zSq/5HznD3ZSTk7kajkaj4D292NLuduDCO1c/NT8Id+jE58KYLKT7hXnbtryGmMg=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script defer src="/static/script.js"></script>
+  <style>
+    ::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+  </style>
 </head>
 
 <body>
@@ -44,7 +55,7 @@
     </div>
   </nav>
 
-  <div class="px-3 mt-2">
+  <div class="ps-3 pt-2 mx-2 mt-2 card">
     <div class="row">
       <div class="col col-6">
         <div class="fw-bold">Parameters</div>
@@ -67,7 +78,7 @@
               style="width: 100px">
           </div>
         </div>
-        <div class="overflow-y-scroll" style="max-height: 150px; height: 150px;">
+        <div class="overflow-y-scroll" style="max-height: 150px; height: 150px">
           <table class="table table-bordered table-sm mt-3" id="optionTable">
             <tr>
               <th class="bg-dark text-white">Option Type</th>
@@ -98,11 +109,8 @@
           <button type="button" class="btn btn-danger" id="btnDeleteOption">Delete</button>
           <button type="button" class="btn btn-success" id="processMultipleOptions">Price options</button>
         </div>
-
-
-
       </div>
-      <div class="col">
+      <div class="col col-6">
         <div class="container" style="position: relative;">
           <canvas id="optionPriceFunction"></canvas>
         </div>
