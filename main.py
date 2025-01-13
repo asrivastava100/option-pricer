@@ -1,5 +1,6 @@
-from BSPricer import BSPricer
-from Portfolio import Portfolio
+from pricer.BSPricer import BSPricer
+from pricer.Portfolio import Portfolio
+from pricer.GeometricBrownianMotion import GeometricBrownianMotion
 
 def main():
     #testing BSPricer and Portfolio classes
@@ -14,6 +15,10 @@ def main():
     print(portfolio_1.portfolio_premium())
     print(portfolio_1.portfolio_delta())
     #print(portfolio_1.multi_option_price_run())
+    #testing GBM
+    gbm = GeometricBrownianMotion(100,0.5,0.01)
+    gbm.generate_paths(1,10,100)
+    
 
 if __name__=="__main__":
     main()
