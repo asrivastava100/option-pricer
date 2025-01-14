@@ -15,12 +15,9 @@ class GeometricBrownianMotion:
 
         for idx in range(time_steps-1):
             stock_prices[:,idx+1] = stock_prices[:,idx]*np.exp((self.rf_rate - 0.5 * self.volatility ** 2) * dt + self.volatility * np.sqrt(dt) * normal_sample[:,idx]) 
-        
-        print(stock_prices)
+        return {"stock_prices": stock_prices,
+                "time_axis": time_axis}
 
-
-
-    #S0 * exp((r -1/2 sigma ^2) * T + sqrt(t) * dwt)
 
         
 
