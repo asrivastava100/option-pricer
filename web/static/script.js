@@ -5,6 +5,7 @@ let btnDelete = document.getElementById("btnDeleteOption")
 let btnAdd = document.getElementById("btnAddOption")
 let optionTable = document.getElementById("optionTable")
 let optionProfitMultipleChart
+let stockSimChart
 
 window.onload = setTimeout(() => priceAll(), 500);
 
@@ -114,6 +115,49 @@ function createOptionProfitChart(chData){
 
 }
 
+function createStockSimChart(chData){
+    if(stockSimChart !== undefined){
+        stockSimChart.destroy()
+    }
+    stockSimChart = new Chart(document.getElementById("stockSimChart"),
+    {
+        type:"line",
+        data:{
+            labels:chData.time_axis,
+            datasets: chData.stock_prices.map(x=> {
+                return {
+                    label:"Stock Price",
+                    data:x,
+                    pointRadius:0,
+                }
+
+            })
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Risk Neutral GBM paths'
+                },
+                legend: {
+                    display: false
+                }
+            }
+
+        }
+
+    }
+
+)
+
+}
+
+async function showStockPriceChart(){
+    let response = await fetch(`/api/stockPriceSim?optionType=call&maturity=0.25&stockPrice=100&strike=95&volatility=0.5&riskFreeRate=0.01&isLong=True`)
+    let chData = await response.json()
+    createStockSimChart(chData)
+}
+
 btnProcessMultipleOptions.addEventListener("click", priceAll)
 
 async function priceAll() {
@@ -154,6 +198,7 @@ async function priceAll() {
     priceOutput.forEach((elem,idx)=>{
         elem.innerText = responseJson.current_option_price[idx].toFixed(2)
     })
+    showStockPriceChart()
 }
 
 function addRow(tblId){

@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from pricer.BSPricer import BSPricer
 from pricer.Portfolio import Portfolio
+from pricer.MCPricer import MCPricer
 
 app = Flask(__name__, static_folder="web", static_url_path="")
 
@@ -49,3 +50,16 @@ def price_portfolio():
     return jsonify(option_portfolio.multi_option_price_run())
 
 
+@app.route("/api/stockPriceSim")
+def stock_price_sim():
+    option_type   = request.args.get("optionType")
+    maturity      = float(request.args.get("maturity"))
+    stock_price   = float(request.args.get("stockPrice"))
+    strike        = float(request.args.get("strike"))
+    volatility    = float(request.args.get("volatility"))
+    riskfree_rate = float(request.args.get("riskFreeRate"))
+    is_long       = request.args.get("isLong") == "True"
+    mc = MCPricer(option_type,maturity,stock_price,strike,volatility,riskfree_rate,is_long)
+    res = mc.get_stock_sims_for_chart()
+    
+    return jsonify(res)

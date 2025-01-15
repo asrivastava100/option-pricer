@@ -21,8 +21,18 @@ class MCPricer:
         self.stock_sim_data = None
         self.gbm = GeometricBrownianMotion(self.stock_price,self.volatility,self.riskfree_rate)
         
-    def stock_sims(self):
-        self.stock_sim_data = self.gbm.generate_paths(self.maturity,100000,100)
+    def get_stock_sims(self):
+        if self.stock_sim_data is None:
+            self.stock_sim_data = self.gbm.generate_paths(self.maturity,100,100)
+        return self.stock_sim_data
+    
+    def get_stock_sims_for_chart(self):
+        stock_simulations = self.get_stock_sims()
+        res_sim = {}
+        res_sim['stock_prices'] = list(stock_simulations['stock_prices'])
+        res_sim['time_axis'] = list(stock_simulations['time_axis'])
+        
+        return res_sim
 
     def price_basic_option(self, stock_price = None, strike = None, maturity = None, volatility = None, risk_free_rate = None) -> float:
         sigma = self.volatility if volatility is None else volatility
@@ -31,7 +41,7 @@ class MCPricer:
         S = self.stock_price if stock_price is None else stock_price
         r = self.riskfree_rate if risk_free_rate is None else risk_free_rate
         if self.stock_sim_data is None:
-            self.stock_sims()
+            self.get_stock_sims()
             nrow, ncol = self.stock_sim_data["stock_prices"].shape
         if self.option_type == "call":
             terminal_payoffs = self.stock_sim_data["stock_prices"][:,ncol-1] - K
