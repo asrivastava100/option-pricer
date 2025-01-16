@@ -23,7 +23,7 @@ class MCPricer:
         
     def get_stock_sims(self):
         if self.stock_sim_data is None:
-            self.stock_sim_data = self.gbm.generate_paths(self.maturity,100,100)
+            self.stock_sim_data = self.gbm.generate_paths(self.maturity,1000,100)
         return self.stock_sim_data
     
     def get_stock_sims_for_chart(self):

@@ -9,7 +9,7 @@ class GeometricBrownianMotion:
     def generate_paths(self, time, num_paths, time_steps):
         normal_sample = np.random.normal(0,1,(num_paths, time_steps))
         dt = time /(time_steps - 1)
-        time_axis = np.linspace(0,time,time_steps)
+        time_axis = np.round(np.linspace(0,time,time_steps),4)
         stock_prices = np.zeros((num_paths,time_steps))
         stock_prices[:,0] = 100
 
