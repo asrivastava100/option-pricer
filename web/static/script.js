@@ -119,15 +119,17 @@ function createStockSimChart(chData){
     if(stockSimChart !== undefined){
         stockSimChart.destroy()
     }
+   
     stockSimChart = new Chart(document.getElementById("stockSimChart"),
     {
         type:"line",
         data:{
             labels:chData.time_axis,
-            datasets: chData.stock_prices.map(x=> {
+            datasets: chData.stock_percentiles.map((x,i) => {
                 return {
-                    label:"Stock Price",
+                    label:`${chData.percentiles[i]}%`,
                     data:x,
+                    fill:"+1",
                     pointRadius:0,
                 }
 
@@ -137,10 +139,10 @@ function createStockSimChart(chData){
             plugins: {
                 title: {
                     display: true,
-                    text: 'Risk Neutral GBM paths'
+                    text: 'Percentiles of Risk Neutral GBM paths'
                 },
                 legend: {
-                    display: false
+                    display: true
                 }
             }
 

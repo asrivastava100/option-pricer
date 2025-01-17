@@ -23,15 +23,17 @@ class MCPricer:
         
     def get_stock_sims(self):
         if self.stock_sim_data is None:
-            self.stock_sim_data = self.gbm.generate_paths(self.maturity,1000,100)
+            self.stock_sim_data = self.gbm.generate_paths(self.maturity,10000,100)
         return self.stock_sim_data
     
     def get_stock_sims_for_chart(self):
+        percentiles = [99.9,99.5,99,90,75,50,25,10,1,0.5,0.01]
         stock_simulations = self.get_stock_sims()
+        stock_percentiles = np.nanpercentile(stock_simulations['stock_prices'],percentiles,axis=0)
         res_sim = {}
-        res_sim['stock_prices'] = list(stock_simulations['stock_prices'])
         res_sim['time_axis'] = list(stock_simulations['time_axis'])
-        
+        res_sim['stock_percentiles'] = stock_percentiles.tolist()
+        res_sim['percentiles'] = percentiles
         return res_sim
 
     def price_basic_option(self, stock_price = None, strike = None, maturity = None, volatility = None, risk_free_rate = None) -> float:
