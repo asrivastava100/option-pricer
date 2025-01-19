@@ -6,6 +6,10 @@ let btnAdd = document.getElementById("btnAddOption")
 let optionTable = document.getElementById("optionTable")
 let optionProfitMultipleChart
 let stockSimChart
+let homePageLink = document.getElementById("homePageLink")
+let stockPriceSimPageLink = document.getElementById("stockPriceSimPageLink")
+let mainPage = document.getElementById("mainPage")
+let stockSimPage = document.getElementById("stockSimPage")
 
 window.onload = setTimeout(() => priceAll(), 500);
 
@@ -200,7 +204,7 @@ async function priceAll() {
     priceOutput.forEach((elem,idx)=>{
         elem.innerText = responseJson.current_option_price[idx].toFixed(2)
     })
-    showStockPriceChart()
+    
 }
 
 function addRow(tblId){
@@ -270,4 +274,16 @@ function deleteRow(tblId) {
 
 btnDelete.addEventListener('click', ()=>{
     deleteRow("optionTable")
+})
+
+homePageLink.addEventListener("click", ()=>{
+    stockSimPage.style.display = "None"
+    mainPage.style.display = ''
+    priceAll()
+})
+
+stockPriceSimPageLink.addEventListener("click",()=>{
+    stockSimPage.style.display = ''
+    mainPage.style.display = "None"
+    showStockPriceChart()
 })
