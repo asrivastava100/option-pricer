@@ -28,7 +28,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+  <nav class="navbar bg-primary navbar-expand-lg" data-bs-theme="dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Option Pricer</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -41,7 +41,7 @@
             <a class="nav-link active" id="homePageLink" aria-current="page" href="#">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" id="stockPriceSimPageLink" aria-current="page" href="#">Stock Price Simulation</a>
+            <a class="nav-link" id="stockPriceSimPageLink" aria-current="page" href="#">Stock Price Simulation</a>
           </li>
           <!-- <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -58,7 +58,7 @@
     </div>
   </nav>
 
-  <div class="ps-3 pt-2 mx-2 mt-2 card" id="mainPage">
+  <div class="ps-3 pt-2 mx-2 mt-2 card pagePanel" id="mainPage">
     <div class="row">
       <div class="col col-6">
         <div class="fw-bold">Parameters</div>
@@ -132,7 +132,7 @@
       </div>
     </div>   
   </div>
-  <div class="ps-3 pt-2 mx-2 mt-2 card" id="stockSimPage" style="display: none">
+  <div class="ps-3 pt-2 mx-2 mt-2 card pagePanel" id="stockSimPage" style="display: none">
     <h1>Risk neutral gbm stock percentile chart</h1>
     <div class="row">
       <div class="col">

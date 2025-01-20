@@ -6,10 +6,7 @@ let btnAdd = document.getElementById("btnAddOption")
 let optionTable = document.getElementById("optionTable")
 let optionProfitMultipleChart
 let stockSimChart
-let homePageLink = document.getElementById("homePageLink")
-let stockPriceSimPageLink = document.getElementById("stockPriceSimPageLink")
-let mainPage = document.getElementById("mainPage")
-let stockSimPage = document.getElementById("stockSimPage")
+
 
 window.onload = setTimeout(() => priceAll(), 500);
 
@@ -277,13 +274,21 @@ btnDelete.addEventListener('click', ()=>{
 })
 
 homePageLink.addEventListener("click", ()=>{
-    stockSimPage.style.display = "None"
-    mainPage.style.display = ''
+    showNavbarTab(0)
     priceAll()
 })
 
 stockPriceSimPageLink.addEventListener("click",()=>{
-    stockSimPage.style.display = ''
-    mainPage.style.display = "None"
+    showNavbarTab(1)
     showStockPriceChart()
 })
+
+function showNavbarTab(tab){
+    let navLinks = Array.from(document.querySelectorAll('nav .nav-link'))
+    let pages = Array.from(document.querySelectorAll('.pagePanel'))
+    navLinks.forEach(x => x.classList.remove('active'))
+    navLinks[tab].classList.add('active')
+    pages.forEach(x => x.style.display = "None")
+    pages[tab].style.display = 'Block'
+
+}
