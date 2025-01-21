@@ -156,9 +156,43 @@ function createStockSimChart(chData){
 }
 
 async function showStockPriceChart(){
-    let response = await fetch(`/api/stockPriceSim?optionType=call&maturity=0.25&stockPrice=100&strike=95&volatility=0.5&riskFreeRate=0.01&isLong=True`)
+
+    let optionTypeData = Array.from(document.getElementsByClassName("optionTypeMC")).map(x => x.value)
+    let isLongData = Array.from(document.getElementsByClassName("isLongMC")).map(x => x.value)
+    let strikeData = Array.from(document.getElementsByClassName("strikeMC")).map(x => x.innerText)
+    let priceOutput = Array.from(document.getElementsByClassName("priceMC"))
+    let maturity = document.getElementById("maturityMC").value
+    let volatility = parseFloat(document.getElementById("volatilityMC").value) / 100
+    let stockPrice = document.getElementById("stockPriceMC").value
+    let riskFreeRate = parseFloat(document.getElementById("riskFreeRateMC").value) / 100
+    let optionData = optionTypeData.map((x, idx) => {
+        return {
+            type: x,
+            isLong: isLongData[idx],
+            strike: strikeData[idx]
+        }
+    })
+
+    let response = await fetch('/api/stockPriceSim', {
+        method: 'POST', 
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            maturity,
+            volatility,
+            stockPrice,
+            riskFreeRate,
+            options: optionData
+        }),
+    })
+
+    //let response = await fetch(`/api/stockPriceSim?optionType=call&maturity=0.25&stockPrice=100&strike=95&volatility=0.5&riskFreeRate=0.01&isLong=True`)
     let chData = await response.json()
+
+    priceOutput[0].innerText = chData.opt_price.toFixed(2)
     createStockSimChart(chData)
+
 }
 
 btnProcessMultipleOptions.addEventListener("click", priceAll)
@@ -201,7 +235,7 @@ async function priceAll() {
     priceOutput.forEach((elem,idx)=>{
         elem.innerText = responseJson.current_option_price[idx].toFixed(2)
     })
-    
+    console.log(priceOutput)
 }
 
 function addRow(tblId){

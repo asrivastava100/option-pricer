@@ -133,8 +133,56 @@
     </div>   
   </div>
   <div class="ps-3 pt-2 mx-2 mt-2 card pagePanel" id="stockSimPage" style="display: none">
-    <h1>Risk neutral gbm stock percentile chart</h1>
     <div class="row">
+      <div class="col col-6">
+        <div class="fw-bold">Monte Carlo Simulation</div>
+        <div class="fw-bold">Parameters</div>
+        <div class="d-flex flex-row gap-2">
+          <div>
+            <label class="form-label" for="maturityMC">Maturity:</label>
+            <input class="form-control" type="text" id="maturityMC" name="maturityMC" value="0.25" style="width:100px">
+          </div>
+          <div>
+            <label class="form-label" for="stockPriceMC">Stock Price:</label>
+            <input class="form-control" type="text" id="stockPriceMC" name="stockPriceMC" value="100" style="width:100px">
+          </div>
+          <div>
+            <label class="form-label" for="volatilityMC">Volatility (%):</label>
+            <input class="form-control" type="text" id="volatilityMC" name="volatilityMC" value="50" style="width:100px">
+          </div>
+          <div>
+            <label class="form-label" for="riskFreeRateMC">Risk-free rate (%):</label>
+            <input class="form-control" type="text" id="riskFreeRateMC" name="riskFreeRateMC" value="1"
+              style="width: 100px">
+          </div>
+        </div>
+        <div>
+          <table class="table table-bordered table-sm mt-3" id="optionTableMC">
+            <tr>
+              <th class="bg-dark text-white">Option Type</th>
+              <th class="bg-dark text-white">Long/Short</th>
+              <th class="bg-dark text-white">Strike</th>
+              <th class="bg-dark text-white">Price</th>
+            </tr>
+            <tr>
+              <td class="px-0 py-0">
+                <select class="optionTypeMC form-select form-select-sm">
+                  <option value="call">Call</option>
+                  <option value="put">Put</option>
+                </select>
+              </td>
+              <td class="px-0 py-0">
+                <select class="isLongMC form-select form-select-sm">
+                  <option value="True">Long</option>
+                  <option value="False">Short</option>
+                </select>
+              </td>
+              <td contenteditable="true" class="strikeMC">95</td>
+              <td class="priceMC"></td>
+            </tr>
+          </table>
+        </div>
+      </div>
       <div class="col">
         <div class="container" style="position: relative;">
           <canvas id="stockSimChart"></canvas>

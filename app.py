@@ -50,16 +50,17 @@ def price_portfolio():
     return jsonify(option_portfolio.multi_option_price_run())
 
 
-@app.route("/api/stockPriceSim")
+@app.post("/api/stockPriceSim")
 def stock_price_sim():
-    option_type   = request.args.get("optionType")
-    maturity      = float(request.args.get("maturity"))
-    stock_price   = float(request.args.get("stockPrice"))
-    strike        = float(request.args.get("strike"))
-    volatility    = float(request.args.get("volatility"))
-    riskfree_rate = float(request.args.get("riskFreeRate"))
-    is_long       = request.args.get("isLong") == "True"
+    req_data = request.get_json()
+    option_type   = req_data["options"][0]["type"]
+    maturity      = float(req_data["maturity"])
+    stock_price   = float(req_data["stockPrice"])
+    strike        = float(req_data["options"][0]["strike"])
+    volatility    = float(req_data["volatility"])
+    riskfree_rate = float(req_data["riskFreeRate"])
+    is_long       = req_data["options"][0]["isLong"] == "True"
+    print(option_type,maturity,stock_price,strike,volatility,riskfree_rate,is_long)
     mc = MCPricer(option_type,maturity,stock_price,strike,volatility,riskfree_rate,is_long)
     res = mc.get_stock_sims_for_chart()
-    
     return jsonify(res)

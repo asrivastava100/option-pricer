@@ -30,27 +30,29 @@ class MCPricer:
         percentiles = [99.9,99.5,99,90,75,50,25,10,1,0.5,0.01]
         stock_simulations = self.get_stock_sims()
         stock_percentiles = np.nanpercentile(stock_simulations['stock_prices'],percentiles,axis=0)
+        opt_price = self.price_basic_option()
         res_sim = {}
         res_sim['time_axis'] = list(stock_simulations['time_axis'])
         res_sim['stock_percentiles'] = stock_percentiles.tolist()
         res_sim['percentiles'] = percentiles
+        res_sim['opt_price'] = opt_price
+       
         return res_sim
 
     def price_basic_option(self, stock_price = None, strike = None, maturity = None, volatility = None, risk_free_rate = None) -> float:
-        sigma = self.volatility if volatility is None else volatility
         T = self.maturity if maturity is None else maturity
         K = self.strike if strike is None else strike
-        S = self.stock_price if stock_price is None else stock_price
         r = self.riskfree_rate if risk_free_rate is None else risk_free_rate
         if self.stock_sim_data is None:
             self.get_stock_sims()
-            nrow, ncol = self.stock_sim_data["stock_prices"].shape
+        stock_sim_data = np.array(self.stock_sim_data["stock_prices"])
+        nrow, ncol = stock_sim_data.shape
         if self.option_type == "call":
-            terminal_payoffs = self.stock_sim_data["stock_prices"][:,ncol-1] - K
+            terminal_payoffs = stock_sim_data[:,ncol-1] - K
             terminal_payoffs[terminal_payoffs < 0] = 0
             return np.exp(-r*T) * np.mean(terminal_payoffs)
         elif self.option_type == "put":
-            terminal_payoffs = K - self.stock_sim_data["stock_prices"][:,ncol-1]
+            terminal_payoffs = K - stock_sim_data[:,ncol-1]
             terminal_payoffs[terminal_payoffs < 0] = 0
             return np.exp(-r*T) * np.mean(terminal_payoffs)
         else:
