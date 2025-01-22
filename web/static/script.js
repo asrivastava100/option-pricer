@@ -187,7 +187,6 @@ async function showStockPriceChart(){
         }),
     })
 
-    //let response = await fetch(`/api/stockPriceSim?optionType=call&maturity=0.25&stockPrice=100&strike=95&volatility=0.5&riskFreeRate=0.01&isLong=True`)
     let chData = await response.json()
 
     priceOutput[0].innerText = chData.opt_price.toFixed(2)
@@ -235,7 +234,6 @@ async function priceAll() {
     priceOutput.forEach((elem,idx)=>{
         elem.innerText = responseJson.current_option_price[idx].toFixed(2)
     })
-    console.log(priceOutput)
 }
 
 function addRow(tblId){

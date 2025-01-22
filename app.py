@@ -60,7 +60,6 @@ def stock_price_sim():
     volatility    = float(req_data["volatility"])
     riskfree_rate = float(req_data["riskFreeRate"])
     is_long       = req_data["options"][0]["isLong"] == "True"
-    print(option_type,maturity,stock_price,strike,volatility,riskfree_rate,is_long)
     mc = MCPricer(option_type,maturity,stock_price,strike,volatility,riskfree_rate,is_long)
     res = mc.get_stock_sims_for_chart()
     return jsonify(res)
