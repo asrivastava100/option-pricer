@@ -6,6 +6,9 @@ let btnAdd = document.getElementById("btnAddOption")
 let optionTable = document.getElementById("optionTable")
 let optionProfitMultipleChart
 let stockSimChart
+let straddle = document.getElementById("straddle")
+let bearSpread = document.getElementById("bearSpread")
+let bullSpread = document.getElementById("bullSpread")
 
 
 window.onload = setTimeout(() => priceAll(), 500);
@@ -267,6 +270,10 @@ function addOptForSelect(selectElem, val, txt){
 }
 
 btnAdd.addEventListener("click",()=>{
+    addRowOptionTable()
+})
+
+function addRowOptionTable(){
     let newRow = addRow("optionTable")
     let optTypeTd = addTd(newRow)
     let isLongTd = addTd(newRow)
@@ -287,10 +294,13 @@ btnAdd.addEventListener("click",()=>{
     strike.setAttribute("contenteditable","true")
     strike.classList.add("strike")
     price.classList.add("price")
-    
-
-
-})
+    return {"rowID":newRow,
+            "optTypeSelect":optTypeSelect,
+            "isLongSelect":isLongSelect,
+            "strike":strike,
+            "price":price
+    }
+}
 
 function deleteRow(tblId) {
     let tblRef = document.getElementById(tblId);
@@ -324,3 +334,25 @@ function showNavbarTab(tab){
     pages[tab].style.display = 'Block'
 
 }
+
+function resetTable(tblId){
+    let tblRef = document.getElementById(tblId)
+    let rowCount = tblRef.rows.length;
+    while(rowCount > 2){
+        deleteRow(tblId)
+        rowCount = rowCount - 1
+    }
+}
+
+straddle.addEventListener("click",()=>{
+    resetTable("optionTable")
+    let optionTypeData = Array.from(document.getElementsByClassName("optionType")).map(x => x.value = "call")
+    let isLongData = Array.from(document.getElementsByClassName("isLong")).map(x => x.value = "True")
+    let strikeData = Array.from(document.getElementsByClassName("strike")).map(x => x.innerText = "96")
+    let maturity = document.getElementById("maturity").value
+    let volatility = parseFloat(document.getElementById("volatility").value) / 100
+    let stockPrice = document.getElementById("stockPrice").value
+    let riskFreeRate = parseFloat(document.getElementById("riskFreeRate").value) / 100
+    let callOpt = addRowOptionTable()
+    let putOpt = addRowOptionTable()
+})
