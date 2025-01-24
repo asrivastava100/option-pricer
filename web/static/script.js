@@ -8,7 +8,7 @@ let optionProfitMultipleChart
 let stockSimChart
 let straddle = document.getElementById("straddle")
 let bearSpread = document.getElementById("bearSpread")
-let bullSpread = document.getElementById("bullSpread")
+let strangle = document.getElementById("strangle")
 
 
 window.onload = setTimeout(() => priceAll(), 500);
@@ -344,15 +344,32 @@ function resetTable(tblId){
     }
 }
 
+function editFirstOption(optType,isLong,strike,price){
+    let optionTypeData = Array.from(document.getElementsByClassName("optionType")).map(x => x.value = optType)
+    let isLongData = Array.from(document.getElementsByClassName("isLong")).map(x => x.value = isLong)
+    let strikeData = Array.from(document.getElementsByClassName("strike")).map(x => x.innerText = strike)
+    let priceOutput = Array.from(document.getElementsByClassName("price")).map(x => x.innerText = price)
+}
+
+
 straddle.addEventListener("click",()=>{
+    showNavbarTab(0)
     resetTable("optionTable")
-    let optionTypeData = Array.from(document.getElementsByClassName("optionType")).map(x => x.value = "call")
-    let isLongData = Array.from(document.getElementsByClassName("isLong")).map(x => x.value = "True")
-    let strikeData = Array.from(document.getElementsByClassName("strike")).map(x => x.innerText = "96")
-    let maturity = document.getElementById("maturity").value
-    let volatility = parseFloat(document.getElementById("volatility").value) / 100
-    let stockPrice = document.getElementById("stockPrice").value
-    let riskFreeRate = parseFloat(document.getElementById("riskFreeRate").value) / 100
-    let callOpt = addRowOptionTable()
+    editFirstOption("call","True","95","")
     let putOpt = addRowOptionTable()
+    putOpt["optTypeSelect"].value = "put"
+    putOpt["isLongSelect"].value = "True"
+    putOpt["strike"].innerText = "95"
+    priceAll()
+})
+
+strangle.addEventListener("click",()=>{
+    showNavbarTab(0)
+    resetTable("optionTable")
+    editFirstOption("call","True","120","")
+    let putOpt = addRowOptionTable()
+    putOpt["optTypeSelect"].value = "put"
+    putOpt["isLongSelect"].value = "True"
+    putOpt["strike"].innerText = "85"
+    priceAll()
 })
