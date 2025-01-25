@@ -9,7 +9,9 @@ let stockSimChart
 let straddle = document.getElementById("straddle")
 let bearSpread = document.getElementById("bearSpread")
 let strangle = document.getElementById("strangle")
-
+let bullSpread = document.getElementById("bullSpread")
+let condorSpread = document.getElementById("condorSpread")
+let butterflySpread = document.getElementById("butterflySpread")
 
 window.onload = setTimeout(() => priceAll(), 500);
 
@@ -371,5 +373,65 @@ strangle.addEventListener("click",()=>{
     putOpt["optTypeSelect"].value = "put"
     putOpt["isLongSelect"].value = "True"
     putOpt["strike"].innerText = "85"
+    priceAll()
+})
+
+bearSpread.addEventListener("click",()=>{
+    showNavbarTab(0)
+    resetTable("optionTable")
+    editFirstOption("put","True","95","")
+    let putOpt = addRowOptionTable()
+    putOpt["optTypeSelect"].value = "put"
+    putOpt["isLongSelect"].value = "False"
+    putOpt["strike"].innerText = "90"
+    priceAll()
+})
+
+bullSpread.addEventListener("click",()=>{
+    showNavbarTab(0)
+    resetTable("optionTable")
+    editFirstOption("call","True","105","")
+    let callOpt = addRowOptionTable()
+    callOpt["optTypeSelect"].value = "call"
+    callOpt["isLongSelect"].value = "False"
+    callOpt["strike"].innerText = "110"
+    priceAll()
+})
+
+condorSpread.addEventListener("click",()=>{
+    showNavbarTab(0)
+    resetTable("optionTable")
+    editFirstOption("call","True","75","")
+    let callOpt = addRowOptionTable()
+    callOpt["optTypeSelect"].value = "call"
+    callOpt["isLongSelect"].value = "False"
+    callOpt["strike"].innerText = "95"
+    let callOpt2 = addRowOptionTable()
+    callOpt2["optTypeSelect"].value = "call"
+    callOpt2["isLongSelect"].value = "False"
+    callOpt2["strike"].innerText = "105"
+    let callOpt3 = addRowOptionTable()
+    callOpt3["optTypeSelect"].value = "call"
+    callOpt3["isLongSelect"].value = "True"
+    callOpt3["strike"].innerText = "125"
+    priceAll()
+})
+
+butterflySpread.addEventListener("click",()=>{
+    showNavbarTab(0)
+    resetTable("optionTable")
+    editFirstOption("call","True","75","")
+    let callOpt = addRowOptionTable()
+    callOpt["optTypeSelect"].value = "call"
+    callOpt["isLongSelect"].value = "False"
+    callOpt["strike"].innerText = "100"
+    let callOpt2 = addRowOptionTable()
+    callOpt2["optTypeSelect"].value = "call"
+    callOpt2["isLongSelect"].value = "False"
+    callOpt2["strike"].innerText = "100"
+    let callOpt3 = addRowOptionTable()
+    callOpt3["optTypeSelect"].value = "call"
+    callOpt3["isLongSelect"].value = "True"
+    callOpt3["strike"].innerText = "125"
     priceAll()
 })
