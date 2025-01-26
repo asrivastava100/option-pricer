@@ -13,6 +13,7 @@ let bullSpread = document.getElementById("bullSpread")
 let condorSpread = document.getElementById("condorSpread")
 let butterflySpread = document.getElementById("butterflySpread")
 
+
 window.onload = setTimeout(() => priceAll(), 500);
 
 function createOptionChart(chData){
@@ -353,85 +354,57 @@ function editFirstOption(optType,isLong,strike,price){
     let priceOutput = Array.from(document.getElementsByClassName("price")).map(x => x.innerText = price)
 }
 
+const optStrats = {"straddle":[{"type": "call","isLong": "True","strike":"95","price":""},
+                               {"type": "put","isLong": "True","strike":"95","price":""}],
+                   "strangle":[{"type": "call","isLong": "True","strike":"120","price":""},
+                               {"type": "put","isLong": "True","strike":"85","price":""}],
+                   "bearSpread":[{"type": "put","isLong": "True","strike":"95","price":""},
+                               {"type": "put","isLong": "False","strike":"90","price":""}],
+                   "bullSpread":[{"type": "call","isLong": "True","strike":"105","price":""},
+                               {"type": "call","isLong": "False","strike":"110","price":""}],
+                   "condorSpread":[{"type": "call","isLong": "True","strike":"75","price":""},
+                               {"type": "call","isLong": "False","strike":"95","price":""},
+                               {"type": "call","isLong": "False","strike":"105","price":""},
+                               {"type": "call","isLong": "True","strike":"125","price":""}],
+                   "butterflySpread":[{"type": "call","isLong": "True","strike":"75","price":""},
+                               {"type": "call","isLong": "False","strike":"100","price":""},
+                               {"type": "call","isLong": "False","strike":"100","price":""},
+                               {"type": "call","isLong": "True","strike":"125","price":""}],
+            }
 
-straddle.addEventListener("click",()=>{
+function buildExample(strategy){
     showNavbarTab(0)
     resetTable("optionTable")
-    editFirstOption("call","True","95","")
-    let putOpt = addRowOptionTable()
-    putOpt["optTypeSelect"].value = "put"
-    putOpt["isLongSelect"].value = "True"
-    putOpt["strike"].innerText = "95"
+    editFirstOption(strategy[0]["type"],strategy[0]["isLong"],strategy[0]["strike"],strategy[0]["price"])
+    for(i=1;i<strategy.length;i++){
+        let newOpt = addRowOptionTable()
+        newOpt["optTypeSelect"].value = strategy[i]["type"]
+        newOpt["isLongSelect"].value = strategy[i]["isLong"]
+        newOpt["strike"].innerText = strategy[i]["strike"]    
+    }
     priceAll()
+}
+
+straddle.addEventListener("click",()=>{
+    buildExample(optStrats["straddle"])
 })
 
 strangle.addEventListener("click",()=>{
-    showNavbarTab(0)
-    resetTable("optionTable")
-    editFirstOption("call","True","120","")
-    let putOpt = addRowOptionTable()
-    putOpt["optTypeSelect"].value = "put"
-    putOpt["isLongSelect"].value = "True"
-    putOpt["strike"].innerText = "85"
-    priceAll()
+    buildExample(optStrats["strangle"])
 })
 
 bearSpread.addEventListener("click",()=>{
-    showNavbarTab(0)
-    resetTable("optionTable")
-    editFirstOption("put","True","95","")
-    let putOpt = addRowOptionTable()
-    putOpt["optTypeSelect"].value = "put"
-    putOpt["isLongSelect"].value = "False"
-    putOpt["strike"].innerText = "90"
-    priceAll()
+    buildExample(optStrats["bearSpread"])
 })
 
 bullSpread.addEventListener("click",()=>{
-    showNavbarTab(0)
-    resetTable("optionTable")
-    editFirstOption("call","True","105","")
-    let callOpt = addRowOptionTable()
-    callOpt["optTypeSelect"].value = "call"
-    callOpt["isLongSelect"].value = "False"
-    callOpt["strike"].innerText = "110"
-    priceAll()
+    buildExample(optStrats["bullSpread"])
 })
 
 condorSpread.addEventListener("click",()=>{
-    showNavbarTab(0)
-    resetTable("optionTable")
-    editFirstOption("call","True","75","")
-    let callOpt = addRowOptionTable()
-    callOpt["optTypeSelect"].value = "call"
-    callOpt["isLongSelect"].value = "False"
-    callOpt["strike"].innerText = "95"
-    let callOpt2 = addRowOptionTable()
-    callOpt2["optTypeSelect"].value = "call"
-    callOpt2["isLongSelect"].value = "False"
-    callOpt2["strike"].innerText = "105"
-    let callOpt3 = addRowOptionTable()
-    callOpt3["optTypeSelect"].value = "call"
-    callOpt3["isLongSelect"].value = "True"
-    callOpt3["strike"].innerText = "125"
-    priceAll()
+    buildExample(optStrats["condorSpread"])
 })
 
 butterflySpread.addEventListener("click",()=>{
-    showNavbarTab(0)
-    resetTable("optionTable")
-    editFirstOption("call","True","75","")
-    let callOpt = addRowOptionTable()
-    callOpt["optTypeSelect"].value = "call"
-    callOpt["isLongSelect"].value = "False"
-    callOpt["strike"].innerText = "100"
-    let callOpt2 = addRowOptionTable()
-    callOpt2["optTypeSelect"].value = "call"
-    callOpt2["isLongSelect"].value = "False"
-    callOpt2["strike"].innerText = "100"
-    let callOpt3 = addRowOptionTable()
-    callOpt3["optTypeSelect"].value = "call"
-    callOpt3["isLongSelect"].value = "True"
-    callOpt3["strike"].innerText = "125"
-    priceAll()
+    buildExample(optStrats["butterflySpread"])
 })
