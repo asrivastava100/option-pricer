@@ -376,7 +376,7 @@ function buildExample(strategy){
     showNavbarTab(0)
     resetTable("optionTable")
     editFirstOption(strategy[0]["type"],strategy[0]["isLong"],strategy[0]["strike"],strategy[0]["price"])
-    for(i=1;i<strategy.length;i++){
+    for(let i=1;i<strategy.length;i++){
         let newOpt = addRowOptionTable()
         newOpt["optTypeSelect"].value = strategy[i]["type"]
         newOpt["isLongSelect"].value = strategy[i]["isLong"]
