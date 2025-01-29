@@ -50,10 +50,12 @@ class MCPricer:
         if self.option_type == "call":
             terminal_payoffs = stock_sim_data[:,ncol-1] - K
             terminal_payoffs[terminal_payoffs < 0] = 0
+            terminal_payoffs = terminal_payoffs * (1 if self.is_long else -1)
             return np.exp(-r*T) * np.mean(terminal_payoffs)
         elif self.option_type == "put":
             terminal_payoffs = K - stock_sim_data[:,ncol-1]
             terminal_payoffs[terminal_payoffs < 0] = 0
+            terminal_payoffs = terminal_payoffs * (1 if self.is_long else -1)
             return np.exp(-r*T) * np.mean(terminal_payoffs)
         else:
             return None
