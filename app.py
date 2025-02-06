@@ -5,7 +5,7 @@ from pricer.MCPricer import MCPricer
 
 app = Flask(__name__, static_folder="web", static_url_path="")
 
-app.debug = True
+app.debug = False
 @app.route("/")
 def hello_world():
     return app.send_static_file('index.html')
