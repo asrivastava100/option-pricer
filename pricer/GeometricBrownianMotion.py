@@ -1,12 +1,12 @@
 import numpy as np
 
 class GeometricBrownianMotion:
-    def __init__(self, price_start, volatility, rf_rate):
+    def __init__(self, price_start:float, volatility:float, rf_rate:float)->None:
         self.price_start = price_start
         self.volatility = volatility
         self.rf_rate = rf_rate
 
-    def generate_paths(self, time, num_paths, time_steps):
+    def generate_paths(self, time:float, num_paths:int, time_steps:int)->dict:
         normal_sample = np.random.normal(0,1,(num_paths, time_steps))
         dt = time /(time_steps - 1)
         time_axis = np.round(np.linspace(0,time,time_steps),4)

@@ -23,7 +23,7 @@ class BSPricer:
         self.is_long = is_long
         self.sign = 1 if self.is_long else -1
 
-    def price_basic_option(self, stock_price = None, strike = None, maturity = None, volatility = None, risk_free_rate = None) -> float:
+    def price_basic_option(self, stock_price:float = None, strike:float = None, maturity:float = None, volatility:float = None, risk_free_rate:float = None) -> float:
         """
         Returns the call / put price. 
         S = Stock price
@@ -51,7 +51,7 @@ class BSPricer:
         else:
             return None
     
-    def get_delta(self, stock_price=None):
+    def get_delta(self, stock_price:float = None) -> float:
         """
         Returns the option delta
         S = Stock price

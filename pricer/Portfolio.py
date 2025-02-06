@@ -15,21 +15,21 @@ class Portfolio:
     def add_new_option(self,
                        option_type:str,
                        strike:float,
-                       is_long:bool):
+                       is_long:bool) -> None:
         new_opt = BSPricer(option_type,self.maturity,self.stock_price,strike,self.volatility,self.riskfree_rate,is_long)
         self.options.append(new_opt)
     
-    def portfolio_premium(self):
+    def portfolio_premium(self)->float:
         if not len(self.options):
             raise Exception("Portfolio must contain atleast one option.")
         return sum([option.price_basic_option() for option in self.options])
     
-    def portfolio_delta(self):
+    def portfolio_delta(self)->float:
         if not len(self.options):
             raise Exception("Portfolio must contain atleast one option.")
         return sum([option.get_delta() for option in self.options])
     
-    def multi_option_price_run(self):
+    def multi_option_price_run(self)->dict:
         if not len(self.options):
             raise Exception("Portfolio must contain atleast one option.")
         option_data = [option.multi_option_price_run() for option in self.options]
